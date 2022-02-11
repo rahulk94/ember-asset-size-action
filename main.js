@@ -26,11 +26,12 @@ async function run() {
     await exec(`git checkout ${pullRequest.base.sha}`);
 
     const masterAssets = await getAssetSizes();
+    const masterTotals = showTotals ? sumAssetSizes(masterAssets) : undefined;
 
     const fileDiffs = diffSizes(normaliseFingerprint(masterAssets), normaliseFingerprint(prAssets));
 
     const uniqueCommentIdentifier = '_Created by [ember-asset-size-action](https://github.com/simplabs/ember-asset-size-action/)_';
-    const body = `${buildOutputText(fileDiffs, prTotals)}\n\n${uniqueCommentIdentifier}`;
+    const body = `${buildOutputText(fileDiffs, prTotals, masterTotals)}\n\n${uniqueCommentIdentifier}`;
 
     const updateExistingComment = getInput('update-comments', { required: false });
     let existingComment = false;
