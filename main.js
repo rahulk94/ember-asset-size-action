@@ -5,6 +5,7 @@ import { getOctokit, context } from '@actions/github';
 import {
   normaliseFingerprint,
   diffSizes,
+  diffTotals,
   buildOutputText,
   getPullRequest,
   getAssetSizes,
